@@ -45,6 +45,7 @@ const addTrainer = async (req, res) => {
                 <h3>Hello ${name},</h3>
                 <p>Welcome! Please click the link below to set your password and activate your account:</p>
                 <a href="${resetLink}">Set Password</a>
+                <p>Your Trainer ID is:" ${TrainerId} " </a>
                 <p>This link will expire in 1 hour.</p>
             `
         );
