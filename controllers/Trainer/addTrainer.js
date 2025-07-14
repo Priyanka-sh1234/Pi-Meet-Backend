@@ -1,7 +1,6 @@
 const Trainer = require('../../schema/Trainers/addTrainerSchema');
 const addTrainerSchema = require('../../validation/Trainers/addValidation');
 const sendMail = require('../../utils/trainerMailAdd');
-const jwt = require('jsonwebtoken');
 
 const addTrainer = async (req, res) => {
     try {
@@ -10,7 +9,7 @@ const addTrainer = async (req, res) => {
             return res.status(400).json({ message: error.details[0].message });
         }
 
-        const { name, email, TrainerId, technology, mobile, role } = req.body;
+        const { name, email, TrainerId, technology, mobile, role, batch } = req.body;
 
         const existingTrainer = await Trainer.findOne({ email });
         if (existingTrainer) {
@@ -25,6 +24,7 @@ const addTrainer = async (req, res) => {
             technology,
             mobile,
             role,
+            batch, // 👈 Added batch field
             PassChangeStatus: 'inactive',
         });
 
@@ -39,7 +39,7 @@ const addTrainer = async (req, res) => {
                 <h3>Hello ${name},</h3>
                 <p>Welcome! Please click the link below to set your password and activate your account:</p>
                 <a href="${resetLink}">Set Password</a>
-                <p>Your Trainer ID is:" ${TrainerId} " </a>
+                <p>Your Trainer ID is: <strong>${TrainerId}</strong></p>
                 <p>This link will expire in 1 hour.</p>
             `
         );
@@ -50,6 +50,7 @@ const addTrainer = async (req, res) => {
                 id: newTrainer._id,
                 name,
                 email,
+                batch,
                 PassChangeStatus: newTrainer.PassChangeStatus,
             }
         });

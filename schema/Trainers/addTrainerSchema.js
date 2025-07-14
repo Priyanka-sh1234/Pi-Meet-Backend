@@ -46,6 +46,11 @@ const trainerSchema = new mongoose.Schema(
     role: {
       type: String,
       default: 'Trainer',
+    },
+    batch: {
+      type: String,
+      enum: ['Batch 9-11', 'Batch 11-1', 'Batch 2-4', 'Batch 4-6', 'Batch offline'],
+      default: null,
     }
   },
   { timestamps: true }

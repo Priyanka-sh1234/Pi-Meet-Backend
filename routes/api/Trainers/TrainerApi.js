@@ -21,6 +21,6 @@ backend.put('/updateTrainer/:TrainerId', adminOnlyMiddleware, UpdateTrainer)
 
 backend.delete('/deleteTrainer/:TrainerId', deleteTrainer);
 
-backend.patch('/trainer/status/:TrainerId', UpdateActiveStatus);
+backend.patch('/TrainerStatus/:TrainerId', UpdateActiveStatus);
 
 module.exports = backend;

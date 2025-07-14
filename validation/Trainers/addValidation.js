@@ -32,6 +32,8 @@ const addTrainerSchema = Joi.object({
       'any.only': 'Role must be one of Student, Admin, or Trainer',
       'string.empty': 'Role is required'
     }),
+
+    batch: Joi.string().valid('Batch 9-11', 'Batch 11-1', 'Batch 2-4', 'Batch 4-6', 'Batch offline').required()
 });
 
 module.exports = addTrainerSchema;
