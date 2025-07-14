@@ -4,14 +4,12 @@ const jwt = require('jsonwebtoken');
 
 const resetTrainerPassword = async (req, res) => {
     try {
-        const { token } = req.query;
         const { newPassword } = req.body;
 
-        if (!token || !newPassword) {
+        if (!newPassword) {
             return res.status(400).json({ message: 'Token and new password are required' });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const trainer = await TrainerModel.findById(decoded.id);
 
         if (!trainer) {
