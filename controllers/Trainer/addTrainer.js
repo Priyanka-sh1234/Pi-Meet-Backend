@@ -30,13 +30,7 @@ const addTrainer = async (req, res) => {
 
         await newTrainer.save();
 
-        const token = jwt.sign(
-            { id: newTrainer._id, email: newTrainer.email },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-
-        const resetLink = `http://localhost:5050/api/trainer/reset-password?token=${token}`;
+        const resetLink = `http://localhost:5173/Trainer/reset`;
 
         await sendMail(
             email,

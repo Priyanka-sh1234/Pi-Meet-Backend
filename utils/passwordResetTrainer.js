@@ -9,7 +9,7 @@ const resetTrainerPassword = async (req, res) => {
       return res.status(400).json({ message: 'Both trainer ID and new password are required.' });
     }
 
-    const trainer = await TrainerModel.findById(id);
+    const trainer = await TrainerModel.findOne(id);
     if (!trainer) {
       return res.status(404).json({ message: 'Trainer not found.' });
     }
