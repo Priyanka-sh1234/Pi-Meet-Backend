@@ -3,13 +3,14 @@ const bcrypt = require('bcryptjs');
 
 const resetTrainerPassword = async (req, res) => {
   try {
-    const { newPassword, id } = req.body;
+    const { trainerId, newPassword } = req.body;
 
-    if (!newPassword || !id) {
-      return res.status(400).json({ message: 'Both trainer ID and new password are required.' });
+    if (!trainerId || !newPassword) {
+      return res.status(400).json({ message: 'Trainer ID and new password are required.' });
     }
 
-    const trainer = await TrainerModel.findOne(id);
+    const trainer = await TrainerModel.findOne({ TrainerId: trainerId });
+
     if (!trainer) {
       return res.status(404).json({ message: 'Trainer not found.' });
     }
@@ -20,10 +21,10 @@ const resetTrainerPassword = async (req, res) => {
 
     await trainer.save();
 
-    return res.status(200).json({ message: 'Password set successfully. Account activated.' });
+    return res.status(200).json({ message: 'Password reset successfully.' });
   } catch (error) {
     console.error('Password reset error:', error);
-    return res.status(500).json({ message: 'Server error while resetting password.' });
+    return res.status(500).json({ message: 'Internal server error.' });
   }
 };
 
