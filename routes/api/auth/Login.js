@@ -2,6 +2,6 @@ const backend = require('express').Router();
 const loginController = require("../../../controllers/loginController");
 
 
-backend.get("/login", loginController)
+backend.post("/login", loginController)
 
 module.exports = backend;
