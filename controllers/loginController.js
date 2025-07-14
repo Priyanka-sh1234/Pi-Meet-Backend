@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const loginController = async (req, res) => {
   try {
     const { id, password } = req.body;
-    console.log("Login attempt with ID:", id);
+    // console.log("Login attempt with ID:", id);
 
     // Validation
     if (!id || !password) {
