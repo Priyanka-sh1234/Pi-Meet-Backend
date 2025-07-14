@@ -6,9 +6,12 @@ const {deleteTrainer} = require("../../../controllers/Trainer/deleteTrainer")
 const {UpdateTrainer} = require("../../../controllers/Trainer/updateTrainer")
 const {adminOnlyMiddleware} = require("../../../Middlewares/AdminOnly")
 const {UpdateActiveStatus} = require("../../../controllers/Trainer/ChangeStatus")
+const {getAllTrainers} = require("../../../controllers/Trainer/GetAllTrainers")
 
 
 backend.post("/addTrainer", addTrainer)
+
+backend.get("/GetAllTrainers",getAllTrainers)
 
 backend.post('/reset-password', resetTrainerPassword); 
 

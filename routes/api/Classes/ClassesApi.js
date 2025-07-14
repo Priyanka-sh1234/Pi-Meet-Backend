@@ -4,7 +4,7 @@ const {getTrainerClasses} = require("../../../controllers/Class/GetClasses")
 const {createAClass} = require("../../../controllers/Trainer/CreateAClass")
 const {deleteClass} = require("../../../controllers/Class/DeleteClass")
 const {getAllClasses} = require("../../../controllers/Class/getallClasses")
-const {addGuest} = require("../../../controllers/Class/addGuest")
+const {addGuestToClassByLink} = require("../../../controllers/Class/addGuest")
 
 
 
@@ -17,6 +17,6 @@ backend.get("/GetAllClasses", getAllClasses)
 
 backend.delete('/DeleteaClass/:meetingLink',deleteClass)
 
-backend.post("/AddGuest",addGuest)
+backend.post("/AddGuest",addGuestToClassByLink)
 
 module.exports = backend;
