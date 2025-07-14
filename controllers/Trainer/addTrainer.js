@@ -24,7 +24,7 @@ const addTrainer = async (req, res) => {
             technology,
             mobile,
             role,
-            batch, // 👈 Added batch field
+            batch,
             PassChangeStatus: 'inactive',
         });
 
