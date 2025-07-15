@@ -7,6 +7,11 @@ const CreateClassSchema = new Schema(
       required: [true, 'Meeting title is required'],
       trim: true,
     },
+    technology:{
+      type: String,
+      required: true,
+      trim: true,
+    },
     meetingType: {
       type: String,
       enum: ['custom', 'week', 'monthly', 'daily'],

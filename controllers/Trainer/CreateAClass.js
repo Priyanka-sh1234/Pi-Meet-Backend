@@ -5,6 +5,7 @@ const createAClass = async (req, res) => {
   try {
     const {
       meetingTitle,
+      technology,
       meetingType,
       startingDate,
       endingDate,
@@ -22,7 +23,7 @@ const createAClass = async (req, res) => {
 
     if (
       !meetingTitle || !meetingType || !startingDate || !endingDate ||
-      !startingTime || !endingTime || !nameOfTrainer ||
+      !startingTime || !endingTime || !nameOfTrainer || !technology ||
       !TrainerID || !meetingLink
     ) {
       return res.status(400).json({ message: 'All required fields must be provided.' });
@@ -41,6 +42,7 @@ const createAClass = async (req, res) => {
     const newClass = new Classes({
       meetingTitle,
       meetingType,
+      technology,
       startingDate: parsedStartDate.toDate(),
       endingDate: parsedEndDate.toDate(),
       startingTime,
