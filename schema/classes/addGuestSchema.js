@@ -35,6 +35,11 @@ const GuestSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'CreateClass',
     },
+     studentCategory: {
+      type: String,
+      enum: ['online', 'offline'],
+      default: 'offline',
+    },
   },
   {
     timestamps: true,

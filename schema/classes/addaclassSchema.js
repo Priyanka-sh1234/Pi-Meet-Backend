@@ -7,7 +7,7 @@ const CreateClassSchema = new Schema(
       required: [true, 'Meeting title is required'],
       trim: true,
     },
-    technology:{
+    technology: {
       type: String,
       required: true,
       trim: true,
@@ -52,6 +52,11 @@ const CreateClassSchema = new Schema(
     addGuest: {
       type: [String],
       default: [],
+    },
+    studentCategory: {
+      type: String,
+      enum: ['online', 'offline'],
+      default: 'online',
     },
   },
   {
