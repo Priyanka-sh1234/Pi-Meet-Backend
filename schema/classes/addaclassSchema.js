@@ -48,12 +48,6 @@ const CreateClassSchema = new Schema(
       type: [String],
       default: [],
     },
-    // startDateOfGuest: {
-    //   type: Date,
-    // },
-    // endDateOfGuest: {
-    //   type: Date,
-    // },
   },
   {
     timestamps: true,

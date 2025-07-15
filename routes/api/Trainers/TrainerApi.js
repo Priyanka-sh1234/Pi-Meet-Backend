@@ -7,6 +7,7 @@ const {UpdateTrainer} = require("../../../controllers/Trainer/updateTrainer")
 const {adminOnlyMiddleware} = require("../../../Middlewares/AdminOnly")
 const {UpdateActiveStatus} = require("../../../controllers/Trainer/ChangeStatus")
 const {getAllTrainers} = require("../../../controllers/Trainer/GetAllTrainers")
+const {AddGuest} = require("../../../controllers/Trainer/addGuest")
 
 
 backend.post("/addTrainer", addTrainer)
@@ -22,5 +23,7 @@ backend.put('/updateTrainer/:TrainerId', adminOnlyMiddleware, UpdateTrainer)
 backend.delete('/deleteTrainer/:TrainerId', deleteTrainer);
 
 backend.patch('/TrainerStatus/:TrainerId', adminOnlyMiddleware, UpdateActiveStatus);
+
+backend.post("/AddGuest",AddGuest)
 
 module.exports = backend;
