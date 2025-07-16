@@ -18,7 +18,7 @@ backend.post('/reset-password', resetTrainerPassword);
 
 backend.get("/getTrainerDetails", getTrainerDetails )
 
-backend.patch('/updateTrainer/:TrainerId', adminOnlyMiddleware, UpdateTrainer)
+backend.put('/updateTrainer/:TrainerId', adminOnlyMiddleware, UpdateTrainer)
 
 backend.delete('/deleteTrainer/:TrainerId', deleteTrainer);
 
