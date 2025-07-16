@@ -30,7 +30,7 @@ const addTrainer = async (req, res) => {
 
         await newTrainer.save();
 
-        const resetLink = `http://localhost:5173/Trainer/reset-password`;
+        const resetLink = `http://localhost:5173/Trainer/reset`;
 
         await sendMail(
             email,
