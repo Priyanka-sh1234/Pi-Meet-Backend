@@ -37,8 +37,7 @@ const GuestSchema = new Schema(
     },
      studentCategory: {
       type: String,
-      enum: ['online', 'offline'],
-      default: 'offline',
+       enum: ['online', 'offline'],
     },
   },
   {

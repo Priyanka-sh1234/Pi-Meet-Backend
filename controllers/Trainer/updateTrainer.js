@@ -29,16 +29,15 @@ const UpdateTrainer = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    const resetLink = `http://localhost:5050/api/trainer/reset-password?token=${token}`;
+    const resetLink = `http://localhost:5173/Trainer/reset-password`;
 
     await sendMail(
       trainer.email,
       'Reset Your Password (Update)',
-      `
-        <h3>Hello ${trainer.name},</h3>
-        <p>Your trainer profile was recently updated.</p>
-        <p>If you'd like to reset your password, please click the link below:</p>
-        <a href="${resetLink}">Reset Password</a>
+      `<h3>Hello ${name},</h3>
+        <p>Welcome! Please click the link below to set your password and activate your account:</p>
+        <a href="${resetLink}">Set Password</a>
+        <p>Your Trainer ID is: <strong>${TrainerId}</strong></p>
         <p>This link will expire in 1 hour.</p>
       `
     );

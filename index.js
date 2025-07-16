@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors( {
     origin:"*",
-    methods:["POST","GET","PUT","DELETE","UPDATE"]
+    methods:["POST","GET","PUT","DELETE","PATCH","UPDATE"]
 }));
 
 
