@@ -32,7 +32,7 @@ const AddGuest = async (req, res, next) => {
     const existingGuest = await GuestSchema.findOne({
       name: name.trim(),
       meetingLink: classData.meetingLink,
-      trainerId: classData.TrainerID,
+      TrainerID: classData.TrainerID,
       meetingTitle: classData.meetingTitle,
       startDateOfGuest: new Date(startDateOfGuest),
       endDateOfGuest: new Date(endDateOfGuest),
@@ -52,7 +52,7 @@ const AddGuest = async (req, res, next) => {
       startDateOfGuest: new Date(startDateOfGuest),
       endDateOfGuest: new Date(endDateOfGuest),
       meetingLink: classData.meetingLink,
-      trainerId: TrainerID,
+      TrainerID: TrainerID,
       meetingTitle: classData.meetingTitle,
       classId: classData._id,
     });
