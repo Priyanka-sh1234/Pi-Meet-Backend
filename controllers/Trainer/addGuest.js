@@ -1,5 +1,6 @@
 const GuestSchema = require('../../schema/classes/addGuestSchema');
 const CreateClass = require("../../schema/classes/addaclassSchema");
+const jwt = require("jsonwebtoken")
 
 const AddGuest = async (req, res, next) => {
   try {
