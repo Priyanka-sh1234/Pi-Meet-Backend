@@ -47,23 +47,38 @@ const AddGuest = async (req, res, next) => {
     }
 
     // Step 4: Create new guest using class data
+    const end = new Date(endDateOfGuest);
     const newGuest = new GuestSchema({
       name: name.trim(),
       startDateOfGuest: new Date(startDateOfGuest),
-      endDateOfGuest: new Date(endDateOfGuest),
+      endDateOfGuest: end,
       meetingLink: classData.meetingLink,
       TrainerID: TrainerID,
       meetingTitle: classData.meetingTitle,
       classId: classData._id,
+      expiresAt: end,
     });
+
+    // Step 5: Create a JWT token valid until endDateOfGuest
+    const token = jwt.sign(
+      {
+        guestId: newGuest._id,
+        name: newGuest.name,
+        classId: newGuest.classId,
+      },
+      SECRET,
+      { expiresIn: Math.floor((end.getTime() - Date.now()) / 1000) }
+    );
 
     await newGuest.save();
 
     return res.status(201).json({
       success: true,
       message: 'Guest added successfully.',
+      token,
       guest: newGuest,
     });
+
   } catch (error) {
     console.error('AddGuest error:', error);
     return res.status(500).json({

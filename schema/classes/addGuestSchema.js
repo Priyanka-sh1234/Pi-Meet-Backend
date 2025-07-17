@@ -38,6 +38,11 @@ const GuestSchema = new Schema(
      studentCategory: {
       type: String,
        enum: ['online', 'offline'],
+    },  
+    expiresAt: {
+      type: Date,
+      required: true,
+      index: { expires: 0 },
     },
   },
   {
