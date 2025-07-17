@@ -22,18 +22,21 @@ const UpdateTrainer = async (req, res) => {
     trainer.technology = technology || trainer.technology;
     trainer.role = role || trainer.role;
 
+    // If email is not changed, set status to "awaiting"
+    if (!email || email === oldEmail) {
+      trainer.status = "awaiting";
+    }
+
     await trainer.save();
 
-    // Check if email changed and send reset email if it did
+    // If email has changed, send reset password email
     if (email && email !== oldEmail) {
-      // Create a token valid for 1 hour, unique to the trainer
       const token = jwt.sign(
         { id: trainer._id, email: trainer.email, role: trainer.role },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
       );
 
-      // Reset link includes the token as a query param
       const resetLink = `http://localhost:5173/Trainer/reset?token=${token}`;
 
       await sendMail(
@@ -55,6 +58,7 @@ const UpdateTrainer = async (req, res) => {
         name: trainer.name,
         email: trainer.email,
         role: trainer.role,
+        status: trainer.status,
       }
     });
 

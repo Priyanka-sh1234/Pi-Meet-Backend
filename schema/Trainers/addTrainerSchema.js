@@ -40,7 +40,7 @@ const trainerSchema = new mongoose.Schema(
     },
     PassChangeStatus: {
       type: String,
-      enum: ['inactive', 'active'],
+      enum: ['inactive', 'active','awaiting'],
       default: 'inactive',
     },
     role: {
