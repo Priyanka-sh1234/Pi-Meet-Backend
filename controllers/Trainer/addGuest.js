@@ -32,7 +32,7 @@ const AddGuest = async (req, res, next) => {
     // Step 3: Check if guest already exists
     const existingGuest = await GuestSchema.findOne({
       name: name.trim(),
-      // meetingLink: classData.meetingLink,
+      meetingLink: classData.meetingLink,
       TrainerID: classData.TrainerID,
       // meetingTitle: classData.meetingTitle,
       // startDateOfGuest: new Date(startDateOfGuest),

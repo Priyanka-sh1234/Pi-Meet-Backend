@@ -13,6 +13,8 @@ const UpdateTrainer = async (req, res) => {
       return res.status(404).json({ message: 'Trainer not found' });
     }
 
+    const oldEmail = trainer.email;
+
     // Update trainer fields
     trainer.name = name || trainer.name;
     trainer.email = email || trainer.email;
@@ -22,28 +24,32 @@ const UpdateTrainer = async (req, res) => {
 
     await trainer.save();
 
-    // Send reset password email
-    const token = jwt.sign(
-      { id: trainer._id, email: trainer.email, role: trainer.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    // Check if email changed and send reset email if it did
+    if (email && email !== oldEmail) {
+      // Create a token valid for 1 hour, unique to the trainer
+      const token = jwt.sign(
+        { id: trainer._id, email: trainer.email, role: trainer.role },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
 
-    const resetLink = `http://localhost:5173/Trainer/reset`;
+      // Reset link includes the token as a query param
+      const resetLink = `http://localhost:5173/Trainer/reset?token=${token}`;
 
-    await sendMail(
-      trainer.email,
-      'Reset Your Password (Update)',
-      `<h3>Hello ${name},</h3>
-        <p>Welcome! Please click the link below to set your password and activate your account:</p>
-        <a href="${resetLink}">Set Password</a>
-        <p>Your Trainer ID is: <strong>${TrainerId}</strong></p>
-        <p>This link will expire in 1 hour.</p>
-      `
-    );
+      await sendMail(
+        trainer.email,
+        'Reset Your Password (Email Changed)',
+        `<h3>Hello ${trainer.name},</h3>
+          <p>Your email has been updated. Please click the link below to set a new password:</p>
+          <a href="${resetLink}">Set Password</a>
+          <p>Your Trainer ID is: <strong>${TrainerId}</strong></p>
+          <p>This link will expire in 1 hour.</p>
+        `
+      );
+    }
 
     return res.status(200).json({
-      message: 'Trainer updated and reset password email sent.',
+      message: 'Trainer updated successfully.',
       trainer: {
         id: trainer._id,
         name: trainer.name,
