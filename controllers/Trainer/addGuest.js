@@ -67,7 +67,7 @@ const AddGuest = async (req, res, next) => {
         name: newGuest.name,
         classId: newGuest.classId,
       },
-      SECRET,
+      process.env.JWT_SECRET,
       { expiresIn: Math.floor((end.getTime() - Date.now()) / 1000) }
     );
 
