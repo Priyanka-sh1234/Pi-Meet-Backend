@@ -8,6 +8,7 @@ const AddGuest = async (req, res, next) => {
       startDateOfGuest,
       endDateOfGuest,
       classId,
+      TrainerID
     } = req.body;
 
     // Step 1: Basic validation
