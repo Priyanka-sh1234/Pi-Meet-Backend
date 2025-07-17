@@ -15,6 +15,13 @@ const UpdateTrainer = async (req, res) => {
 
     const oldEmail = trainer.email;
 
+    const isEmailChanged = email && email !== oldEmail;
+    const isOtherFieldChanged =
+      (name && name !== trainer.name) ||
+      (mobile && mobile !== trainer.mobile) ||
+      (technology && technology !== trainer.technology) ||
+      (role && role !== trainer.role);
+
     // Update trainer fields
     trainer.name = name || trainer.name;
     trainer.email = email || trainer.email;
@@ -22,8 +29,8 @@ const UpdateTrainer = async (req, res) => {
     trainer.technology = technology || trainer.technology;
     trainer.role = role || trainer.role;
 
-    // If email has changed, mark status as "awaiting" and send reset email
-    if (email && email !== oldEmail) {
+    // Handle status based on what changed
+    if (isEmailChanged) {
       trainer.status = "awaiting";
 
       const token = jwt.sign(
@@ -44,12 +51,10 @@ const UpdateTrainer = async (req, res) => {
           <p>This link will expire in 1 hour.</p>
         `
       );
-    } else {
-      // If email hasn't changed, mark trainer as "active"
+    } else if (isOtherFieldChanged) {
       trainer.status = "active";
     }
 
-    // Save trainer after all changes
     await trainer.save();
 
     return res.status(200).json({
