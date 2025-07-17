@@ -24,13 +24,14 @@ const UpdateTrainer = async (req, res) => {
 
     // If email is not changed, set status to "awaiting"
     if (!email || email === oldEmail) {
-      trainer.status = "awaiting";
+      trainer.status = "active";
     }
 
     await trainer.save();
 
     // If email has changed, send reset password email
     if (email && email !== oldEmail) {
+      trainer.status = "awaiting"
       const token = jwt.sign(
         { id: trainer._id, email: trainer.email, role: trainer.role },
         process.env.JWT_SECRET,
