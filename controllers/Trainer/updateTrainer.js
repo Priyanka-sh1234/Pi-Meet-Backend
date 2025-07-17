@@ -29,7 +29,7 @@ const UpdateTrainer = async (req, res) => {
     trainer.technology = technology || trainer.technology;
     trainer.role = role || trainer.role;
 
-    // Handle status based on what changed
+    // If email changed (even with other fields), set awaiting and send email
     if (isEmailChanged) {
       trainer.PassChangeStatus = "awaiting";
 
@@ -52,6 +52,7 @@ const UpdateTrainer = async (req, res) => {
         `
       );
     } else if (isOtherFieldChanged) {
+      // If only other fields changed
       trainer.PassChangeStatus = "active";
     }
 
