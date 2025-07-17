@@ -31,7 +31,7 @@ const UpdateTrainer = async (req, res) => {
 
     // Handle status based on what changed
     if (isEmailChanged) {
-      trainer.status = "awaiting";
+      trainer.PassChangeStatus = "awaiting";
 
       const token = jwt.sign(
         { id: trainer._id, email: trainer.email, role: trainer.role },
@@ -52,7 +52,7 @@ const UpdateTrainer = async (req, res) => {
         `
       );
     } else if (isOtherFieldChanged) {
-      trainer.status = "active";
+      trainer.PassChangeStatus = "active";
     }
 
     await trainer.save();
@@ -64,7 +64,7 @@ const UpdateTrainer = async (req, res) => {
         name: trainer.name,
         email: trainer.email,
         role: trainer.role,
-        status: trainer.status,
+        status: trainer.PassChangeStatus,
       }
     });
 
