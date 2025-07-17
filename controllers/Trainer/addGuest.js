@@ -35,8 +35,8 @@ const AddGuest = async (req, res, next) => {
       meetingLink: classData.meetingLink,
       TrainerID: classData.TrainerID,
       meetingTitle: classData.meetingTitle,
-      startDateOfGuest: new Date(startDateOfGuest),
-      endDateOfGuest: new Date(endDateOfGuest),
+      // startDateOfGuest: new Date(startDateOfGuest),
+      // endDateOfGuest: new Date(endDateOfGuest),
       classId,
     });
 
