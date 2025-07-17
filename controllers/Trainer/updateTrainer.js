@@ -22,16 +22,10 @@ const UpdateTrainer = async (req, res) => {
     trainer.technology = technology || trainer.technology;
     trainer.role = role || trainer.role;
 
-    // If email is not changed, set status to "awaiting"
-    if (!email || email === oldEmail) {
-      trainer.status = "active";
-    }
-
-    await trainer.save();
-
-    // If email has changed, send reset password email
+    // If email has changed, mark status as "awaiting" and send reset email
     if (email && email !== oldEmail) {
-      trainer.status = "awaiting"
+      trainer.status = "awaiting";
+
       const token = jwt.sign(
         { id: trainer._id, email: trainer.email, role: trainer.role },
         process.env.JWT_SECRET,
@@ -50,7 +44,13 @@ const UpdateTrainer = async (req, res) => {
           <p>This link will expire in 1 hour.</p>
         `
       );
+    } else {
+      // If email hasn't changed, mark trainer as "active"
+      trainer.status = "active";
     }
+
+    // Save trainer after all changes
+    await trainer.save();
 
     return res.status(200).json({
       message: 'Trainer updated successfully.',
