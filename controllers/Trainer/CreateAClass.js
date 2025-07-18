@@ -1,5 +1,6 @@
 const dayjs = require('dayjs');
 const Classes = require('../../schema/classes/addaclassSchema');
+const sendMail = require('../../utils/mailer');
 
 const createAClass = async (req, res) => {
   try {
@@ -15,11 +16,9 @@ const createAClass = async (req, res) => {
       TrainerID,
       meetingLink,
       addGuest,
-      // startDateOfGuest,
-      // endDateOfGuest,
     } = req.body;
 
-    console.log(req.body)
+    console.log(req.body);
 
     if (
       !meetingTitle || !meetingType || !startingDate || !endingDate ||
@@ -31,13 +30,12 @@ const createAClass = async (req, res) => {
 
     const parsedStartDate = dayjs(startingDate);
     const parsedEndDate = dayjs(endingDate);
-    // const parsedGuestStart = startDateOfGuest ? dayjs(startDateOfGuest) : null;
-    // const parsedGuestEnd = endDateOfGuest ? dayjs(endDateOfGuest) : null;
-
 
     if (!parsedStartDate.isValid() || !parsedEndDate.isValid()) {
       return res.status(400).json({ message: 'Invalid start or end date.' });
     }
+
+    const guestList = Array.isArray(addGuest) ? addGuest : [];
 
     const newClass = new Classes({
       meetingTitle,
@@ -48,17 +46,37 @@ const createAClass = async (req, res) => {
       startingTime,
       endingTime,
       nameOfTrainer,
-      TrainerID: TrainerID,
+      TrainerID,
       meetingLink,
-      addGuest: Array.isArray(addGuest) ? addGuest : [],
-      // startDateOfGuest: parsedGuestStart?.isValid() ? parsedGuestStart.toDate() : null,
-      // endDateOfGuest: parsedGuestEnd?.isValid() ? parsedGuestEnd.toDate() : null,
+      addGuest: guestList,
     });
 
     await newClass.save();
 
+    // Send email to each guest
+    for (const guest of guestList) {
+      if (guest.email) {
+        const message = `
+Hello ${guest.name},
+
+You have been invited to join the meeting: "${meetingTitle}".
+
+📅 Date: ${startingDate} to ${endingDate}
+⏰ Time: ${startingTime} to ${endingTime}
+📍 Meeting Link: ${meetingLink}
+
+Your login credentials:
+- Login ID: ${guest.email}
+
+Regards,
+${nameOfTrainer}
+        `;
+        await sendMail(guest.email, 'Class Invitation: ' + meetingTitle, message);
+      }
+    }
+
     return res.status(201).json({
-      message: 'Class created successfully',
+      message: 'Class created successfully and emails sent to guests',
       class: newClass,
     });
 
