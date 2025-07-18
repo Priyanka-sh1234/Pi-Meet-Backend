@@ -1,6 +1,6 @@
 const dayjs = require('dayjs');
 const Classes = require('../../schema/classes/addaclassSchema');
-const sendMail = require('../../utils/mailer');
+const sendMail = require('../../utils/guestOnline');
 
 const createAClass = async (req, res) => {
   try {
